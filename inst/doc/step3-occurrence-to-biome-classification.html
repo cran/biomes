@@ -344,36 +344,36 @@ classification</h1>
 
 <div id="goal" class="section level1">
 <h1>Goal</h1>
-<p>With a biome scheme chosen in <a href="step2-choosing-a-biome-scheme.html">Step 2</a>,
-<code>biomes_classify()</code> assigns <strong>one biome class per
-occurrence record</strong>. You select the scheme by its <strong>biome
-scheme number</strong> (1-31), the same number
-<code>biomes_rank()</code> returns as the best scheme.</p>
+<p>With a biome scheme chosen in <a href="step2-choice-of-a-biome-scheme.html">Step 2</a>,
+<code>biomes_classify()</code> assigns <strong>one biome per occurrence
+record</strong>. You select the scheme by its <strong>biome scheme
+number</strong> (1-31), the same number <code>biomes_rank()</code>
+returns as the best scheme.</p>
 <blockquote>
 <p><strong>Terms.</strong> <em>Classifying</em> here means assigning
-each <strong>occurrence record</strong> to a <strong>biome
-class</strong> (e.g. <em>savanna</em>) of the chosen <strong>biome
-scheme</strong> (identified by its biome scheme number).</p>
+each <strong>occurrence record</strong> to a <strong>biome</strong>
+(e.g. <em>savanna</em>) of the chosen <strong>biome scheme</strong>
+(identified by its biome scheme number).</p>
 </blockquote>
 <hr />
 </div>
-<div id="classify-occurrence-records-into-biome-classes" class="section level1">
-<h1>1. Classify occurrence records into biome classes</h1>
+<div id="classify-occurrence-records-into-biomes" class="section level1">
+<h1>1. Classify occurrence records into biomes</h1>
 <p><code>biomes_classify()</code> takes a table of points (or an
 <code>sf</code> / <code>SpatVector</code>) and returns the <strong>input
-data with the biome-class assignment appended on the right</strong>.
-Pick the scheme with the <code>scheme</code> argument; you never handle
+data with the biome assignment appended on the right</strong>. Pick the
+scheme with the <code>scheme</code> argument; you never handle
 <code>SpatRaster</code> objects yourself.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>classified <span class="ot">&lt;-</span> <span class="fu">biomes_classify</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>)</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>classified <span class="ot">&lt;-</span> <span class="fu">biomes_classify</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">head</span>(classified)</span></code></pre></div>
 <p>A new column <code>Biome_Inventory_layer_01_name</code> has been
 added (the column names carry the raster layer names of the packaged
 stack). The appended columns use the suffixes <code>_value</code>
-(raster code) and <code>_name</code> (biome-class name). Records that
-fall <strong>outside</strong> every biome class of a scheme
-(e.g. coastal records or small islands missing from a coarse map) are,
-by default, labelled <code>&quot;no_biome&quot;</code> rather than dropped, so the
-counts stay complete:</p>
+(raster code) and <code>_name</code> (biome name). Records that fall
+<strong>outside</strong> every biome of a scheme (e.g. coastal records
+or small islands missing from a coarse map) are, by default, labelled
+<code>&quot;no_biome&quot;</code> rather than dropped, so the counts stay
+complete:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">table</span>(classified<span class="sc">$</span>Biome_Inventory_layer_01_name, <span class="at">useNA =</span> <span class="st">&quot;ifany&quot;</span>)</span></code></pre></div>
 <p>Handling off-map records <strong>explicitly and identically across
 schemes</strong> matters, because the amount and spatial pattern of
@@ -384,16 +384,16 @@ ranking criteria in Step 2.</p>
 <div id="common-variations" class="section level1">
 <h1>2. Common variations</h1>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Several schemes at once, one column per scheme</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">biomes_classify</span>(biomes_example, <span class="at">scheme =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">25</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">biomes_classify</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">25</span>)) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Keep both the raster value and the biome-class name</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">biomes_classify</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">value =</span> <span class="st">&quot;both&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Keep both the raster value and the biome name</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">biomes_classify</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">value =</span> <span class="st">&quot;both&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co"># Return only the classification columns (drop the input)</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">biomes_classify</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">append =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">biomes_classify</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">append =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">3</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co"># Keep NA for off-map points instead of the &quot;no_biome&quot; label</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>class_na <span class="ot">&lt;-</span> <span class="fu">biomes_classify</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">na =</span> <span class="cn">NA</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>class_na <span class="ot">&lt;-</span> <span class="fu">biomes_classify</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">na =</span> <span class="cn">NA</span>)</span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(class_na<span class="sc">$</span>Biome_Inventory_layer_01_name))</span></code></pre></div>
 <p>For a scheme outside the packaged stack, pass your own single-layer
 <code>terra::SpatRaster</code> via <code>biome =</code> instead of a
@@ -402,7 +402,7 @@ scheme number.</p>
 </div>
 <div id="next" class="section level1">
 <h1>Next</h1>
-<p>Your records now carry a biome-class assignment. Continue with <a href="step4-output-and-visualisation.html">Step 4: Output and
+<p>Your records now carry a biome assignment. Continue with <a href="step4-output-and-visualisation.html">Step 4: Output and
 visualisation</a> to tabulate and map them.</p>
 </div>
 

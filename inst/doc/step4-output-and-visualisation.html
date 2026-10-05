@@ -343,21 +343,21 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div id="goal" class="section level1">
 <h1>Goal</h1>
-<p>The records were assigned to biome classes in <a href="step3-occurrence-to-biome-classification.html">Step 3</a>. This
-final step <strong>summarises</strong> the result per biome class with
+<p>The records were assigned to biomes in <a href="step3-occurrence-to-biome-classification.html">Step 3</a>. This
+final step <strong>summarises</strong> the result per biome with
 <code>biomes_tab()</code> and <strong>visualises</strong> the whole
 workflow with <code>biomes_visualise()</code>.</p>
 <hr />
 </div>
-<div id="tabulate-records-per-biome-class" class="section level1">
-<h1>1. Tabulate records per biome class</h1>
+<div id="tabulate-records-per-biome" class="section level1">
+<h1>1. Tabulate records per biome</h1>
 <p><code>biomes_tab()</code> counts <strong>occurrence records</strong>
-(one input row = one record) per biome class and scheme, returning a
-long table with one row per (scheme, biome class) pair:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>classified <span class="ot">&lt;-</span> <span class="fu">biomes_classify</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>)</span>
+(one input row = one record) per biome and scheme, returning a long
+table with one row per (scheme, biome) pair:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>classified <span class="ot">&lt;-</span> <span class="fu">biomes_classify</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">biomes_tab</span>(classified)</span></code></pre></div>
 <p>The returned columns are <code>scheme</code>, <code>biome</code> and
-<code>n</code>. To count <strong>unique species</strong> per biome class
+<code>n</code>. To count <strong>unique species</strong> per biome
 instead of records, deduplicate by <code>species</code> first:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a></span>
@@ -374,27 +374,27 @@ occurrence records:</p>
 <li><strong>rank</strong>: the ranking of the biome schemes (best
 highlighted);</li>
 <li><strong>map</strong>: the occurrence records (red points) over the
-chosen scheme, with the number of records per biome class appended to
-the legend labels;</li>
+chosen scheme, with the number of records per biome appended to the
+legend labels;</li>
 <li><strong>barplot</strong>: the number of records and species per
-biome class.</li>
+biome.</li>
 </ul>
 <p>By default all three are drawn and lettered <strong>a, b, c</strong>.
 If <code>scheme</code> is <code>NULL</code>, the best-fitting scheme is
 chosen by <code>biomes_rank()</code> (within
-<code>scheme_type</code>).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">biomes_visualise</span>(biomes_example)               <span class="co"># rank + map + barplot</span></span></code></pre></div>
+<code>definition</code>).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">biomes_visualise</span>(bombacoideae_occurrences)               <span class="co"># rank + map + barplot</span></span></code></pre></div>
 <p>Select individual panels with <code>panels</code>; the panel letters
 adjust to the selection (e.g. <code>panels = c(&quot;map&quot;, &quot;barplot&quot;)</code>
 labels them a and b):</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># just the map, for a fixed scheme</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">biomes_visualise</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">panels =</span> <span class="st">&quot;map&quot;</span>)</span></code></pre></div>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">biomes_visualise</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">panels =</span> <span class="st">&quot;map&quot;</span>)</span></code></pre></div>
 <p>The <strong>red points are the occurrence records</strong> you
 supplied. Drop the record counts from the legend labels with
 <code>legend_counts = FALSE</code>, or the whole colour legend with
 <code>legend = FALSE</code>. Save any panel with
 <code>ggplot2::ggsave()</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">biomes_visualise</span>(biomes_example, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">panels =</span> <span class="st">&quot;map&quot;</span>, <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">biomes_visualise</span>(bombacoideae_occurrences, <span class="at">scheme =</span> <span class="dv">1</span>, <span class="at">panels =</span> <span class="st">&quot;map&quot;</span>, <span class="at">legend =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="st">&quot;biome_map.jpg&quot;</span>, p, <span class="at">width =</span> <span class="dv">13</span>, <span class="at">height =</span> <span class="dv">8</span>, <span class="at">dpi =</span> <span class="dv">600</span>)</span></code></pre></div>
 <hr />
 </div>
@@ -405,28 +405,30 @@ ranks across all 31 schemes and uses the best one. No figure is drawn by
 default (<code>plot = &quot;none&quot;</code>, the fastest option).
 <code>plot = &quot;all&quot;</code> returns the <strong>combined</strong> lettered
 figure in <code>res$plot</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">biomes_full</span>(<span class="at">x =</span> biomes_example, <span class="at">plot =</span> <span class="st">&quot;all&quot;</span>)   <span class="co"># scheme = &quot;best&quot;</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">biomes_full</span>(<span class="at">x =</span> bombacoideae_occurrences, <span class="at">plot =</span> <span class="st">&quot;all&quot;</span>)   <span class="co"># scheme = &quot;best&quot;</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>res<span class="sc">$</span>scheme     <span class="co"># the chosen biome scheme number</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>res<span class="sc">$</span>table      <span class="co"># records per biome class</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>res<span class="sc">$</span>table      <span class="co"># records per biome</span></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>res<span class="sc">$</span>plot       <span class="co"># the combined figure (rank + map + barplot)</span></span></code></pre></div>
 <p>A subset of <code>c(&quot;rank&quot;, &quot;map&quot;, &quot;barplot&quot;)</code> returns the
 panels <strong>individually</strong> (no panel letters), each in its own
 component <code>res$rank</code>, <code>res$map</code>,
 <code>res$barplot</code>:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">biomes_full</span>(<span class="at">x =</span> biomes_example, <span class="at">plot =</span> <span class="fu">c</span>(<span class="st">&quot;rank&quot;</span>, <span class="st">&quot;map&quot;</span>, <span class="st">&quot;barplot&quot;</span>))</span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">biomes_full</span>(<span class="at">x =</span> bombacoideae_occurrences, <span class="at">plot =</span> <span class="fu">c</span>(<span class="st">&quot;rank&quot;</span>, <span class="st">&quot;map&quot;</span>, <span class="st">&quot;barplot&quot;</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>res<span class="sc">$</span>map        <span class="co"># just the map panel, on its own</span></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>res<span class="sc">$</span>barplot    <span class="co"># just the barplot panel</span></span></code></pre></div>
 <p>To force a specific scheme, pass its number
-(<code>scheme = 1</code>); to rank within one group, pass a scheme type
-(<code>scheme = &quot;vegetation&quot;</code>). Reach for the individual functions
-when you want to tweak a step; use <code>biomes_full()</code> when you
-want the standard pipeline in one call.</p>
+(<code>scheme = 1</code>); to rank within one group, pass a biome
+definition (<code>scheme = &quot;vegetation&quot;</code>). Reach for the
+individual functions when you want to tweak a step; use
+<code>biomes_full()</code> when you want the standard pipeline in one
+call.</p>
 <hr />
 </div>
 <div id="done" class="section level1">
 <h1>Done</h1>
 <p>That completes the four-step workflow: <strong>assemble → choose a
-scheme → classify → output and visualise.</strong> Back to <a href="step1-occurrence-records-and-biome-schemes.html">Step 1</a>.</p>
+scheme → classify → output and visualise.</strong> Back to <a href="step1-assembly-of-occurrence-records-and-biome-schemes.html">Step
+1</a>.</p>
 </div>
 
 

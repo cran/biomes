@@ -3,7 +3,7 @@ Sys.setenv(OPENBLAS_NUM_THREADS = "1")
 Sys.setenv(OMP_NUM_THREADS      = "1")
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(biomes)
-data(biomes_example)
+data(bombacoideae_occurrences)
 
 run_raster <- isTRUE(as.logical(Sys.getenv("NOT_CRAN", "false")))
 if (run_raster) {
@@ -12,7 +12,7 @@ if (run_raster) {
 }
 
 ## ----eval = run_raster--------------------------------------------------------
-# classified <- biomes_classify(biomes_example, scheme = 1)
+# classified <- biomes_classify(bombacoideae_occurrences, scheme = 1)
 # biomes_tab(classified)
 
 ## ----eval = run_raster && requireNamespace("dplyr", quietly = TRUE)-----------
@@ -22,25 +22,25 @@ if (run_raster) {
 #   distinct(species, Biome_Inventory_layer_01_name) |>
 #   biomes_tab()
 
-## ----eval = run_raster && all(vapply(c("sf","ggplot2","viridis","tidyterra","cowplot"), requireNamespace, logical(1), quietly = TRUE)), fig.width = 7, fig.height = 10, fig.alt = "Ranking, occurrence map and biome-class composition"----
-# biomes_visualise(biomes_example)               # rank + map + barplot
+## ----eval = run_raster && all(vapply(c("sf","ggplot2","viridis","tidyterra","cowplot"), requireNamespace, logical(1), quietly = TRUE)), fig.width = 7, fig.height = 10, fig.alt = "Ranking, occurrence map and biome composition"----
+# biomes_visualise(bombacoideae_occurrences)               # rank + map + barplot
 
 ## ----eval = run_raster && all(vapply(c("sf","ggplot2","viridis","tidyterra"), requireNamespace, logical(1), quietly = TRUE)), fig.width = 7, fig.height = 4, fig.alt = "Occurrence map over biome scheme 1"----
 # # just the map, for a fixed scheme
-# biomes_visualise(biomes_example, scheme = 1, panels = "map")
+# biomes_visualise(bombacoideae_occurrences, scheme = 1, panels = "map")
 
 ## ----eval = FALSE-------------------------------------------------------------
-# p <- biomes_visualise(biomes_example, scheme = 1, panels = "map", legend = FALSE)
+# p <- biomes_visualise(bombacoideae_occurrences, scheme = 1, panels = "map", legend = FALSE)
 # ggplot2::ggsave("biome_map.jpg", p, width = 13, height = 8, dpi = 600)
 
 ## ----eval = FALSE-------------------------------------------------------------
-# res <- biomes_full(x = biomes_example, plot = "all")   # scheme = "best"
+# res <- biomes_full(x = bombacoideae_occurrences, plot = "all")   # scheme = "best"
 # res$scheme     # the chosen biome scheme number
-# res$table      # records per biome class
+# res$table      # records per biome
 # res$plot       # the combined figure (rank + map + barplot)
 
 ## ----eval = FALSE-------------------------------------------------------------
-# res <- biomes_full(x = biomes_example, plot = c("rank", "map", "barplot"))
+# res <- biomes_full(x = bombacoideae_occurrences, plot = c("rank", "map", "barplot"))
 # res$map        # just the map panel, on its own
 # res$barplot    # just the barplot panel
 

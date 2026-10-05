@@ -12,7 +12,7 @@
 
 
 
-<title>Step 1: Assembling occurrence records and biome schemes</title>
+<title>Step 1: Assembly of occurrence records and biome schemes</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -337,7 +337,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Step 1: Assembling occurrence records and
+<h1 class="title toc-ignore">Step 1: Assembly of occurrence records and
 biome schemes</h1>
 
 
@@ -347,9 +347,9 @@ biome schemes</h1>
 <p><code>biomes</code> follows a four-step workflow, mirrored by these
 four vignettes and by Figure 1 of the companion paper:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Assembling occurrence records and biome schemes</strong>
+<li><strong>Assembly of occurrence records and biome schemes</strong>
 <em>(this vignette)</em>.</li>
-<li><a href="step2-choosing-a-biome-scheme.html">Choosing a biome
+<li><a href="step2-choice-of-a-biome-scheme.html">Choice of a biome
 scheme</a>.</li>
 <li><a href="step3-occurrence-to-biome-classification.html">Occurrences-to-biome
 classification</a>.</li>
@@ -357,15 +357,19 @@ classification</a>.</li>
 visualisation</a>.</li>
 </ol>
 <p>Throughout, we use the packaged example dataset
-<code>biomes_example</code> so you can run everything without a
-download.</p>
+<code>bombacoideae_occurrences</code> (17,030 cleaned occurrence records
+of 185 species of the plant subfamily Bombacoideae, Zizka et al. 2020),
+so you can run everything without a download.</p>
 <blockquote>
 <p><strong>Terms.</strong> A <strong>biome scheme</strong> is one of the
-31 published classification systems. A <strong>biome class</strong> is a
-category within a scheme (e.g. <em>savanna</em>). A <strong>biome scheme
-number</strong> (1-31) identifies a scheme; it is the value you pass to
-the <code>scheme</code> argument of the classification and visualisation
-functions.</p>
+31 published classification systems. A <strong>biome</strong> is a
+category within a scheme (e.g. <em>savanna</em>). A <strong>biome
+definition</strong> is the concept on which a scheme delimits its biomes
+(climate, vegetation, land cover, ecoregion, integrative or
+anthropogenic); schemes sharing a definition form a group. A
+<strong>biome scheme number</strong> (1-31) identifies a scheme; it is
+the value you pass to the <code>scheme</code> argument of the
+classification and visualisation functions.</p>
 </blockquote>
 <hr />
 </div>
@@ -405,7 +409,7 @@ and a <strong>latitude</strong> column in <strong>decimal degrees, WGS84
 <tr class="odd">
 <td><code>species</code></td>
 <td>for species counts</td>
-<td>needed only to count species per biome class (Step 4).</td>
+<td>needed only to count species per biome (Step 4).</td>
 </tr>
 <tr class="even">
 <td>anything else</td>
@@ -418,19 +422,17 @@ and a <strong>latitude</strong> column in <strong>decimal degrees, WGS84
 <code>lon</code> and <code>lat</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">biomes_rank</span>(occ, <span class="at">lon =</span> <span class="st">&quot;decimallongitude&quot;</span>, <span class="at">lat =</span> <span class="st">&quot;decimallatitude&quot;</span>)</span></code></pre></div>
 <p>The packaged example set:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(biomes_example)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">nrow</span>(biomes_example)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] 29104</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">head</span>(biomes_example)</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; # A tibble: 6 × 5</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt;   genus    species          countryCode decimalLongitude decimalLatitude</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;                  &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 1 Felis    Felis catus      US                     -74.6           40.6 </span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 2 Felis    Felis catus      US                     -74.6           40.6 </span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 3 Acinonyx Acinonyx jubatus KE                      35.5           -1.23</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 4 Lynx     Lynx rufus       US                    -111.            32.3 </span></span>
-<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 5 Lynx     Lynx rufus       US                     -81.6           38.4 </span></span>
-<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 6 Panthera Panthera leo     KE                      35.4           -1.37</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(bombacoideae_occurrences)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">nrow</span>(bombacoideae_occurrences)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [1] 17030</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="fu">head</span>(bombacoideae_occurrences)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt;                     species decimalLongitude decimalLatitude countryCode</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 1 Cavanillesia platanifolia        -79.98333         -2.1500         ECU</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 2    Cavanillesia umbellata        -70.25000        -12.0000         PER</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 3    Cavanillesia umbellata        -78.63333         -4.5000         PER</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 4    Cavanillesia umbellata        -76.46666         -2.8000         PER</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 5    Cavanillesia umbellata        -69.10420        -12.0321         PER</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 6    Cavanillesia umbellata        -74.30611        -11.1425         PER</span></span></code></pre></div>
 <p>If you do not already have a dataset, <code>biomes_occ()</code> can
 download and clean one from GBIF for a taxon (needs the
 <code>rgbif</code> / <code>CoordinateCleaner</code> packages and a
@@ -450,11 +452,11 @@ human-readable <code>biomes_info()</code>) to see which publication and
 methodology a scheme comes from:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">data</span>(biomes_information)</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>biomes_information[<span class="dv">25</span>, <span class="fu">c</span>(<span class="st">&quot;publication&quot;</span>, <span class="st">&quot;name_of_classification&quot;</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                         <span class="st">&quot;scheme_type&quot;</span>, <span class="st">&quot;scheme_number&quot;</span>)]</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                         <span class="st">&quot;biome_definition&quot;</span>, <span class="st">&quot;scheme_number&quot;</span>)]</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;   publication              name_of_classification      scheme_type scheme_number</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                    &lt;chr&gt;                       &lt;chr&gt;               &lt;dbl&gt;</span></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 1 Ramankutty &amp; Foley, 1999 Estimating historical chan… vegetation             25</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt;   publication              name_of_classification biome_definition scheme_number</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;                    &lt;chr&gt;                  &lt;chr&gt;                    &lt;dbl&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; 1 Ramankutty &amp; Foley, 1999 Estimating historical… vegetation                  25</span></span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="fu">biomes_info</span>(<span class="dv">25</span>)   <span class="co"># readable summary for biome scheme no. 25</span></span>
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -468,9 +470,9 @@ methodology a scheme comes from:</p>
 <span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; Description: Potential natural vegetation is derived by classifying DISCover land cover data following the Olson Global Ecosystems framework (Olson, 1994).</span></span>
 <span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; Number of biome classes: 12 (12/0)</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; Number of biomes: 12 (12/0)</span></span>
 <span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; Biome classes (raster value: name):</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt; Biomes (raster value: name):</span></span>
 <span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt;      1: Tropical evergreen woodland</span></span>
 <span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt;      2: Tropical deciduous woodland</span></span>
 <span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt;      3: Savanna</span></span>
@@ -492,15 +494,15 @@ alphabetical order of the 31 schemes’ original publications. Scheme no.
 25, for example, is the vegetation scheme of Ramankutty &amp; Foley
 (1999).</p>
 </blockquote>
-<p>The class-level lookup (raster value → biome-class name, per scheme)
-lives in <code>biomes_legend</code>; the classification and
-visualisation functions use it internally.</p>
+<p>The biome lookup (raster value → biome name, per scheme) lives in
+<code>biomes_legend</code>; the classification and visualisation
+functions use it internally.</p>
 <hr />
 </div>
 <div id="next" class="section level1">
 <h1>Next</h1>
 <p>You now have (a) occurrence records and (b) the 31 biome schemes and
-their metadata. Continue with <a href="step2-choosing-a-biome-scheme.html">Step 2: Choosing a biome
+their metadata. Continue with <a href="step2-choice-of-a-biome-scheme.html">Step 2: Choice of a biome
 scheme</a>.</p>
 </div>
 

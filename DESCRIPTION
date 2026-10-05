@@ -1,14 +1,14 @@
 Package: biomes
 Title: Reproducible Occurrence-to-Biome Classification Using 31 Global
         Biome Schemes
-Version: 0.9.4
+Version: 0.9.5
 Authors@R: 
-    c(person("Hans Christian", "Groß", email = "hc.gross@gmx.de", role = c("cre", "aut")),
-        person("Alexander", "Zizka", email = "alexander.zizka@biologie.uni-marburg.de", role = c("aut", "fnd")),
+    c(person("Hans Christian", "Groß", email = "grossha@uni-marburg.de", role = c("cre", "aut")),
+        person("Jan-Christopher", "Fischer", role = "aut"),
         person("Anna", "Walentowitz", role = "aut"),
-        person("Jan-Christopher", "Fischer", role = "aut"))
-Description: Reproducibly classifies occurrence records into biome classes using
- 31 published global terrestrial biome schemes compiled by Fischer and colleagues
+        person("Alexander", "Zizka", email = "alexander.zizka@biologie.uni-marburg.de", role = c("aut", "fnd")))
+Description: Reproducibly classifies occurrence records into biomes using
+ 31 published global biome schemes compiled by Fischer and colleagues
  (2022) <doi:10.1111/geb.13574>, provided as harmonised raster layers at 10x10 km
  resolution globally. Includes functions to choose the most suitable biome scheme
  for a dataset by a data-driven ranking, to classify occurrence records, and to
@@ -33,11 +33,11 @@ LazyData: true
 Config/Needs/website: rmarkdown
 Config/roxygen2/version: 8.0.0
 NeedsCompilation: no
-Packaged: 2026-08-21 15:07:14 UTC; hcgro
+Packaged: 2026-10-05 12:31:14 UTC; hcgro
 Author: Hans Christian Groß [cre, aut],
-  Alexander Zizka [aut, fnd],
+  Jan-Christopher Fischer [aut],
   Anna Walentowitz [aut],
-  Jan-Christopher Fischer [aut]
-Maintainer: Hans Christian Groß <hc.gross@gmx.de>
+  Alexander Zizka [aut, fnd]
+Maintainer: Hans Christian Groß <grossha@uni-marburg.de>
 Repository: CRAN
-Date/Publication: 2026-08-31 13:40:02 UTC
+Date/Publication: 2026-10-05 15:00:07 UTC
